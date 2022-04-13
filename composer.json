@@ -1,0 +1,32 @@
+{
+    "name": "semperton/search",
+    "description": "Components to build data search criteria.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Johannes Rabausch",
+            "email": "mail@jrabausch.de"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Semperton\\Search\\": "src/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit tests"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "vimeo/psalm": "^4.9"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4"
+        }
+    },
+    "require": {
+        "php": ">=7.1"
+    }
+}
