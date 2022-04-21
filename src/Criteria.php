@@ -32,41 +32,27 @@ final class Criteria
 		$this->filter = $filter ?? new Filter();
 	}
 
-	public function __clone()
-	{
-		$this->filter = clone $this->filter;
-	}
-
-	public static function create(?Filter $filter = null): Criteria
-	{
-		return new Criteria($filter);
-	}
-
 	public function getFilter(): Filter
 	{
 		return $this->filter;
 	}
 
-	public function setFilter(Filter $filter): self
+	public function withFilter(Filter $filter): self
 	{
-		$this->filter = $filter;
-		return $this;
+		$new = clone $this;
+		$new->filter = $filter;
+
+		return $new;
 	}
 
-	public function addFields(string ...$fields): self
+	public function withFields(string ...$fields): self
 	{
+		$new = clone $this;
 		foreach ($fields as $field) {
-			$this->fields[$field] = true;
+			$new->fields[$field] = true;
 		}
-		return $this;
-	}
 
-	public function removeFields(string ...$fields): self
-	{
-		foreach ($fields as $field) {
-			unset($this->fields[$field]);
-		}
-		return $this;
+		return $new;
 	}
 
 	/**
@@ -77,10 +63,12 @@ final class Criteria
 		return array_keys($this->fields);
 	}
 
-	public function resetFields(): self
+	public function withoutFields(): self
 	{
-		$this->fields = [];
-		return $this;
+		$new = clone $this;
+		$new->fields = [];
+
+		return $new;
 	}
 
 	public function getLimit(): int
@@ -98,22 +86,28 @@ final class Criteria
 		return $this->offset;
 	}
 
-	public function setLimit(int $num): self
+	public function withLimit(int $num): self
 	{
-		$this->limit = $num;
-		return $this;
+		$new = clone $this;
+		$new->limit = $num;
+
+		return $new;
 	}
 
-	public function setOffset(int $num): self
+	public function withOffset(int $num): self
 	{
-		$this->offset = $num;
-		return $this;
+		$new = clone $this;
+		$new->offset = $num;
+
+		return $new;
 	}
 
-	public function setPage(int $page): self
+	public function withPage(int $page): self
 	{
-		$this->page = $page;
-		return $this;
+		$new = clone $this;
+		$new->page = $page;
+
+		return $new;
 	}
 
 	public function getPage(): int
@@ -121,22 +115,28 @@ final class Criteria
 		return $this->page;
 	}
 
-	public function sortDesc(string $field): self
+	public function withSortDesc(string $field): self
 	{
-		$this->sorting[$field] = self::SORT_DESC;
-		return $this;
+		$new = clone $this;
+		$new->sorting[$field] = self::SORT_DESC;
+
+		return $new;
 	}
 
-	public function sortAsc(string $field): self
+	public function withSortAsc(string $field): self
 	{
-		$this->sorting[$field] = self::SORT_ASC;
-		return $this;
+		$new = clone $this;
+		$new->sorting[$field] = self::SORT_ASC;
+
+		return $new;
 	}
 
-	public function resetSorting(): self
+	public function withoutSorting(): self
 	{
-		$this->sorting = [];
-		return $this;
+		$new = clone $this;
+		$new->sorting = [];
+
+		return $new;
 	}
 
 	/**
