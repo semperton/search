@@ -13,21 +13,7 @@ final class Filter implements IteratorAggregate
 	const CONNECTION_OR = 'or';
 
 	/** @var array<int, string|Condition|Filter> */
-	protected $filter = [];
-
-	public function __clone()
-	{
-		foreach ($this->filter as $key => $entry) {
-			if (is_object($entry)) {
-				$this->filter[$key] = clone $entry;
-			}
-		}
-	}
-
-	public static function create(): Filter
-	{
-		return new self();
-	}
+	protected $data = [];
 
 	/**
 	 * @return Generator<string, Condition|Filter>
@@ -36,7 +22,7 @@ final class Filter implements IteratorAggregate
 	{
 		$connection = '';
 
-		foreach ($this->filter as $entry) {
+		foreach ($this->data as $entry) {
 
 			if (is_string($entry)) {
 				$connection = $entry;
@@ -49,16 +35,16 @@ final class Filter implements IteratorAggregate
 
 	protected function addConnection(string $connection, ?Filter $filter): self
 	{
-		$lastValue = array_pop($this->filter);
+		$lastValue = array_pop($this->data);
 
 		if (is_object($lastValue)) {
-			$this->filter[] = $lastValue;
+			$this->data[] = $lastValue;
 		}
 
-		$this->filter[] = $connection;
+		$this->data[] = $connection;
 
 		if ($filter) {
-			$this->filter[] = $filter;
+			$this->data[] = $filter;
 		}
 
 		return $this;
@@ -69,13 +55,13 @@ final class Filter implements IteratorAggregate
 	 */
 	protected function addCondition(string $field, string $operator, $value): self
 	{
-		$last = end($this->filter);
+		$last = end($this->data);
 
 		if (!is_string($last)) {
-			$this->filter[] = self::CONNECTION_AND;
+			$this->data[] = self::CONNECTION_AND;
 		}
 
-		$this->filter[] = new Condition($field, $operator, $value);
+		$this->data[] = new Condition($field, $operator, $value);
 
 		return $this;
 	}
