@@ -35,6 +35,9 @@ final class Result implements OuterIterator, Countable
 		return $this->criteria;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function first()
 	{
 		$this->iterator->rewind();
@@ -69,6 +72,9 @@ final class Result implements OuterIterator, Countable
 		$this->iterator->next();
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function current()
 	{
 		return $this->iterator->current();
@@ -79,6 +85,9 @@ final class Result implements OuterIterator, Countable
 		return $this->iterator->valid();
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function key()
 	{
 		return $this->iterator->key();
