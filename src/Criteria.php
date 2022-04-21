@@ -45,7 +45,7 @@ final class Criteria
 		return $new;
 	}
 
-	public function withFields(string ...$fields): self
+	public function withField(string ...$fields): self
 	{
 		$new = clone $this;
 		foreach ($fields as $field) {
@@ -115,7 +115,7 @@ final class Criteria
 		return $this->page;
 	}
 
-	public function withSortDesc(string $field): self
+	public function withDescSort(string $field): self
 	{
 		$new = clone $this;
 		$new->sorting[$field] = self::SORT_DESC;
@@ -123,7 +123,7 @@ final class Criteria
 		return $new;
 	}
 
-	public function withSortAsc(string $field): self
+	public function withAscSort(string $field): self
 	{
 		$new = clone $this;
 		$new->sorting[$field] = self::SORT_ASC;
