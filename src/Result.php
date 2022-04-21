@@ -8,7 +8,7 @@ use Countable;
 use Iterator;
 use OuterIterator;
 
-final class Result implements OuterIterator, Countable
+class Result implements OuterIterator, Countable
 {
 	/** @var Criteria */
 	protected $criteria;
