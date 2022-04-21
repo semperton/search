@@ -5,7 +5,8 @@
 <h1>Semperton Search</h1>
 <p>Components to build data search criteria.</p>
 </div>
-<hr>
+
+---
 
 ## Installation
 
