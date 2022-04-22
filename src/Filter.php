@@ -7,6 +7,11 @@ namespace Semperton\Search;
 use Generator;
 use IteratorAggregate;
 
+use function is_string;
+use function is_object;
+use function array_pop;
+use function end;
+
 final class Filter implements IteratorAggregate
 {
 	const CONNECTION_AND = 'and';

@@ -8,6 +8,10 @@ use Countable;
 use Iterator;
 use OuterIterator;
 
+use function count;
+use function iterator_count;
+use function iterator_to_array;
+
 class Result implements OuterIterator, Countable
 {
 	/** @var Criteria */

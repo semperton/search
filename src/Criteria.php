@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Semperton\Search;
 
+use function array_keys;
+
 final class Criteria
 {
 	const SORT_DESC = 'desc';
