@@ -56,7 +56,7 @@ final class Filter implements IteratorAggregate
 	}
 
 	/**
-	 * @param scalar|array<int, scalar> $value
+	 * @param null|scalar|array<int, scalar> $value
 	 */
 	protected function addCondition(string $field, string $operator, $value): self
 	{
@@ -153,6 +153,16 @@ final class Filter implements IteratorAggregate
 	public function notLike(string $field, string $value): self
 	{
 		return $this->addCondition($field, Condition::NOT_LIKE, $value);
+	}
+
+	public function isNull(string $field): self
+	{
+		return $this->addCondition($field, Condition::NULL, null);
+	}
+
+	public function notNull(string $field): self
+	{
+		return $this->addCondition($field, Condition::NOT_NULL, null);
 	}
 
 	/**

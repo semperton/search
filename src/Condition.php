@@ -16,6 +16,8 @@ final class Condition
 	const NOT_IN = 'not in';
 	const LIKE = 'like';
 	const NOT_LIKE = 'not like';
+	const NULL = 'is null';
+	const NOT_NULL = 'is not null';
 	const BETWEEN = 'between';
 
 	/** @var string */
@@ -24,11 +26,11 @@ final class Condition
 	/** @var string */
 	protected $operator;
 
-	/** @var scalar|array<int, scalar> */
+	/** @var null|scalar|array<int, scalar> */
 	protected $value;
 
 	/**
-	 * @param scalar|array<int, scalar> $value
+	 * @param null|scalar|array<int, scalar> $value
 	 */
 	public function __construct(string $field, string $operator, $value)
 	{
@@ -48,7 +50,7 @@ final class Condition
 	}
 
 	/**
-	 * @return scalar|array<int, scalar>
+	 * @return null|scalar|array<int, scalar>
 	 */
 	public function getValue()
 	{
