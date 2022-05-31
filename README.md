@@ -15,4 +15,4 @@ Just use Composer:
 ```
 composer require semperton/search
 ```
-Search requires PHP 7.1+
+Search requires PHP 7.2+
