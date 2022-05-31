@@ -16,7 +16,7 @@ final class Condition
 	const NOT_IN = 'not in';
 	const LIKE = 'like';
 	const NOT_LIKE = 'not like';
-	const NULL = 'is null';
+	const IS_NULL = 'is null';
 	const NOT_NULL = 'is not null';
 	const BETWEEN = 'between';
 

@@ -157,7 +157,7 @@ final class Filter implements IteratorAggregate
 
 	public function isNull(string $field): self
 	{
-		return $this->addCondition($field, Condition::NULL, null);
+		return $this->addCondition($field, Condition::IS_NULL, null);
 	}
 
 	public function notNull(string $field): self
