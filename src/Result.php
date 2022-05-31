@@ -20,13 +20,10 @@ class Result implements OuterIterator, Countable
 	/** @var Iterator */
 	protected $iterator;
 
-	/** @var null|int */
-	protected $count;
-
 	public function __construct(Criteria $criteria, Iterator $iterator)
 	{
-		$this->iterator = $iterator;
 		$this->criteria = $criteria;
+		$this->iterator = $iterator;
 	}
 
 	public function getInnerIterator(): Iterator
@@ -51,19 +48,11 @@ class Result implements OuterIterator, Countable
 
 	public function count(): int
 	{
-		if ($this->count !== null) {
-			return $this->count;
-		}
-
-		$this->count = 0;
-
 		if ($this->iterator instanceof Countable) {
-			$this->count = count($this->iterator);
-		} else {
-			$this->count = iterator_count($this->iterator);
+			return count($this->iterator);
 		}
 
-		return $this->count;
+		return iterator_count($this->iterator);
 	}
 
 	public function empty(): bool
