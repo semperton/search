@@ -155,6 +155,21 @@ final class Filter implements IteratorAggregate
 		return $this->addCondition($field, Condition::NOT_LIKE, $value);
 	}
 
+	public function contains(string $field, string $value): self
+	{
+		return $this->like($field, '%' . $value . '%');
+	}
+
+	public function prefix(string $field, string $value): self
+	{
+		return $this->like($field, $value . '%');
+	}
+
+	public function suffix(string $field, string $value): self
+	{
+		return $this->like($field, '%' . $value);
+	}
+
 	public function isNull(string $field): self
 	{
 		return $this->addCondition($field, Condition::IS_NULL, null);
@@ -172,5 +187,14 @@ final class Filter implements IteratorAggregate
 	public function between(string $field, $first, $last): self
 	{
 		return $this->addCondition($field, Condition::BETWEEN, [$first, $last]);
+	}
+
+	/**
+	 * @param scalar $first
+	 * @param scalar $last
+	 */
+	public function notBetween(string $field, $first, $last): self
+	{
+		return $this->addCondition($field, Condition::NOT_BETWEEN, [$first, $last]);
 	}
 }

@@ -19,6 +19,7 @@ final class Condition
 	const IS_NULL = 'is null';
 	const NOT_NULL = 'is not null';
 	const BETWEEN = 'between';
+	const NOT_BETWEEN = 'not between';
 
 	/** @var string */
 	protected $field;
