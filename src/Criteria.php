@@ -23,6 +23,9 @@ final class Criteria
 	/** @var array<string, true> */
 	protected $fields = [];
 
+	/** @var array<string, Criteria> */
+	protected $associations = [];
+
 	/** @var array<string, string> */
 	protected $sorting = [];
 
@@ -39,7 +42,7 @@ final class Criteria
 		return $this->filter;
 	}
 
-	public function withFilter(Filter $filter): self
+	public function withFilter(Filter $filter): Criteria
 	{
 		$new = clone $this;
 		$new->filter = $filter;
@@ -47,7 +50,7 @@ final class Criteria
 		return $new;
 	}
 
-	public function withField(string ...$fields): self
+	public function withField(string ...$fields): Criteria
 	{
 		$new = clone $this;
 		foreach ($fields as $field) {
@@ -65,12 +68,36 @@ final class Criteria
 		return array_keys($this->fields);
 	}
 
-	public function withoutFields(): self
+	public function withoutFields(): Criteria
 	{
 		$new = clone $this;
 		$new->fields = [];
 
 		return $new;
+	}
+
+	public function withAssociation(string $field, Criteria $criteria): Criteria
+	{
+		$new = clone $this;
+		$new->associations[$field] = $criteria;
+
+		return $new;
+	}
+
+	public function withoutAssociations(): Criteria
+	{
+		$new = clone $this;
+		$new->associations = [];
+
+		return $new;
+	}
+
+	/**
+	 * @return array<string, Criteria>
+	 */
+	public function getAssociations(): array
+	{
+		return $this->associations;
 	}
 
 	public function getLimit(): int
@@ -88,7 +115,7 @@ final class Criteria
 		return $this->offset;
 	}
 
-	public function withLimit(int $num): self
+	public function withLimit(int $num): Criteria
 	{
 		$new = clone $this;
 		$new->limit = $num;
@@ -96,7 +123,7 @@ final class Criteria
 		return $new;
 	}
 
-	public function withOffset(int $num): self
+	public function withOffset(int $num): Criteria
 	{
 		$new = clone $this;
 		$new->offset = $num;
@@ -104,7 +131,7 @@ final class Criteria
 		return $new;
 	}
 
-	public function withPage(int $page): self
+	public function withPage(int $page): Criteria
 	{
 		$new = clone $this;
 		$new->page = $page;
@@ -117,7 +144,7 @@ final class Criteria
 		return $this->page;
 	}
 
-	public function withDescSort(string $field): self
+	public function withDescSort(string $field): Criteria
 	{
 		$new = clone $this;
 		$new->sorting[$field] = self::SORT_DESC;
@@ -125,7 +152,7 @@ final class Criteria
 		return $new;
 	}
 
-	public function withAscSort(string $field): self
+	public function withAscSort(string $field): Criteria
 	{
 		$new = clone $this;
 		$new->sorting[$field] = self::SORT_ASC;
@@ -133,7 +160,7 @@ final class Criteria
 		return $new;
 	}
 
-	public function withoutSorting(): self
+	public function withoutSorting(): Criteria
 	{
 		$new = clone $this;
 		$new->sorting = [];
