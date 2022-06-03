@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Semperton\Search;
 
-use function array_keys;
+use function array_merge;
+use function array_unique;
 
 final class Criteria
 {
@@ -20,7 +21,10 @@ final class Criteria
 	/** @var int */
 	protected $page = 0;
 
-	/** @var array<string, true> */
+	/** @var int[] */
+	protected $ids = [];
+
+	/** @var string[] */
 	protected $fields = [];
 
 	/** @var array<string, Criteria> */
@@ -29,16 +33,20 @@ final class Criteria
 	/** @var array<string, string> */
 	protected $sorting = [];
 
-	/** @var Filter */
+	/** @var null|Filter */
 	protected $filter;
 
-	public function __construct(?Filter $filter = null)
+	public function __construct(int ...$ids)
 	{
-		$this->filter = $filter ?? new Filter();
+		$this->ids = $ids;
 	}
 
 	public function getFilter(): Filter
 	{
+		if (!$this->filter) {
+			$this->filter = new Filter();
+		}
+
 		return $this->filter;
 	}
 
@@ -50,22 +58,36 @@ final class Criteria
 		return $new;
 	}
 
-	public function withField(string ...$fields): Criteria
+	public function withId(int ...$ids): Criteria
 	{
 		$new = clone $this;
-		foreach ($fields as $field) {
-			$new->fields[$field] = true;
-		}
+		$new->ids = array_merge($this->ids, $ids);
+
+		return $new;
+	}
+
+	public function withoutIds(): Criteria
+	{
+		$new = clone $this;
+		$new->ids = [];
 
 		return $new;
 	}
 
 	/**
-	 * @return array<int, string>
+	 * @return int[]
 	 */
-	public function getFields(): array
+	public function getIds(): array
 	{
-		return array_keys($this->fields);
+		return array_unique($this->ids);
+	}
+
+	public function withField(string ...$fields): Criteria
+	{
+		$new = clone $this;
+		$new->fields = array_merge($this->fields, $fields);
+
+		return $new;
 	}
 
 	public function withoutFields(): Criteria
@@ -76,10 +98,18 @@ final class Criteria
 		return $new;
 	}
 
-	public function withAssociation(string $field, Criteria $criteria): Criteria
+	/**
+	 * @return string[]
+	 */
+	public function getFields(): array
+	{
+		return array_unique($this->fields);
+	}
+
+	public function withAssociation(string $field, ?Criteria $criteria = null): Criteria
 	{
 		$new = clone $this;
-		$new->associations[$field] = $criteria;
+		$new->associations[$field] = $criteria ?? new self();
 
 		return $new;
 	}
