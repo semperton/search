@@ -41,9 +41,9 @@ class Result implements OuterIterator, Countable
 	 */
 	public function first()
 	{
-		$this->iterator->rewind();
+		$this->rewind();
 
-		return $this->iterator->current();
+		return $this->current();
 	}
 
 	public function count(): int
@@ -93,6 +93,6 @@ class Result implements OuterIterator, Countable
 
 	public function toArray(): array
 	{
-		return iterator_to_array($this->iterator);
+		return iterator_to_array($this);
 	}
 }
