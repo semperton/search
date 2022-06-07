@@ -71,6 +71,12 @@ final class Filter implements IteratorAggregate
 		return $this;
 	}
 
+	public function reset(): self
+	{
+		$this->data = [];
+		return $this;
+	}
+
 	public function and(?Filter $filter = null): self
 	{
 		return $this->addConnection(self::CONNECTION_AND, $filter);
@@ -82,9 +88,17 @@ final class Filter implements IteratorAggregate
 	}
 
 	/**
+	 * @param null|scalar|array<int, scalar> $value
+	 */
+	public function where(string $field, string $operator, $value): self
+	{
+		return $this->addCondition($field, $operator, $value);
+	}
+
+	/**
 	 * @param scalar $value
 	 */
-	public function equal(string $field, $value): self
+	public function equals(string $field, $value): self
 	{
 		return $this->addCondition($field, Condition::EQUAL, $value);
 	}
@@ -160,12 +174,12 @@ final class Filter implements IteratorAggregate
 		return $this->like($field, '%' . $value . '%');
 	}
 
-	public function prefix(string $field, string $value): self
+	public function startsWith(string $field, string $value): self
 	{
 		return $this->like($field, $value . '%');
 	}
 
-	public function suffix(string $field, string $value): self
+	public function endsWith(string $field, string $value): self
 	{
 		return $this->like($field, '%' . $value);
 	}
