@@ -43,7 +43,7 @@ final class FilterTest extends TestCase
 	public function testEqual(): void
 	{
 		$filter = $this->createFilter();
-		$filter->equal('number', 22);
+		$filter->equals('number', 22);
 
 		foreach ($filter as $bool => $obj) {
 
