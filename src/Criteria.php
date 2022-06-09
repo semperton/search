@@ -41,9 +41,14 @@ final class Criteria
 		$this->ids = $ids;
 	}
 
+	public function hasFilter(): bool
+	{
+		return $this->filter !== null;
+	}
+
 	public function getFilter(): Filter
 	{
-		if (!$this->filter) {
+		if ($this->filter === null) {
 			$this->filter = new Filter();
 		}
 
@@ -120,6 +125,11 @@ final class Criteria
 		$new->associations = [];
 
 		return $new;
+	}
+
+	public function getAssociation(string $field): ?Criteria
+	{
+		return $this->associations[$field] ?? null;
 	}
 
 	/**
