@@ -196,6 +196,11 @@ final class Criteria
 		return $new;
 	}
 
+	public function hasAggregations(): bool
+	{
+		return !!$this->aggregations;
+	}
+
 	/**
 	 * @return array<string, Aggregation>
 	 */
