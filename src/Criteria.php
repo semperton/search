@@ -30,6 +30,9 @@ final class Criteria
 	/** @var array<string, Criteria> */
 	protected $associations = [];
 
+	/** @var array<string, Aggregation> */
+	protected $aggregations = [];
+
 	/** @var array<string, string> */
 	protected $sorting = [];
 
@@ -111,6 +114,11 @@ final class Criteria
 		return array_unique($this->fields);
 	}
 
+	public function hasAssociation(string $field): bool
+	{
+		return isset($this->associations[$field]);
+	}
+
 	public function withAssociation(string $field, ?Criteria $criteria = null): Criteria
 	{
 		$new = clone $this;
@@ -138,6 +146,62 @@ final class Criteria
 	public function getAssociations(): array
 	{
 		return $this->associations;
+	}
+
+	public function withAvgAggregation(string $name, string $field): Criteria
+	{
+		$new = clone $this;
+		$new->aggregations[$name] = new Aggregation($field, Aggregation::AVG);
+
+		return $new;
+	}
+
+	public function withSumAggregation(string $name, string $field): Criteria
+	{
+		$new = clone $this;
+		$new->aggregations[$name] = new Aggregation($field, Aggregation::SUM);
+
+		return $new;
+	}
+
+	public function withMinAggregation(string $name, string $field): Criteria
+	{
+		$new = clone $this;
+		$new->aggregations[$name] = new Aggregation($field, Aggregation::MIN);
+
+		return $new;
+	}
+
+	public function withMaxAggregation(string $name, string $field): Criteria
+	{
+		$new = clone $this;
+		$new->aggregations[$name] = new Aggregation($field, Aggregation::MAX);
+
+		return $new;
+	}
+
+	public function withCountAggregation(string $name, string $field): Criteria
+	{
+		$new = clone $this;
+		$new->aggregations[$name] = new Aggregation($field, Aggregation::COUNT);
+
+		return $new;
+	}
+
+	public function withoutAggregations(): Criteria
+	{
+		$new = clone $this;
+		$new->aggregations = [];
+
+		return $new;
+	}
+
+	/**
+	 * @return array<string, Aggregation>
+	 */
+	public function getAggregations(): array
+	{
+		return $this->aggregations;
 	}
 
 	public function getLimit(): int

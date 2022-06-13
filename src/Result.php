@@ -20,10 +20,17 @@ class Result implements OuterIterator, Countable
 	/** @var Iterator */
 	protected $iterator;
 
-	public function __construct(Criteria $criteria, Iterator $iterator)
+	/** @var array<string, mixed> */
+	protected $aggregations;
+
+	/**
+	 * @param array<string, mixed> $aggregations
+	 */
+	public function __construct(Criteria $criteria, Iterator $iterator, array $aggregations = [])
 	{
 		$this->criteria = $criteria;
 		$this->iterator = $iterator;
+		$this->aggregations = $aggregations;
 	}
 
 	public function getInnerIterator(): Iterator
@@ -34,6 +41,22 @@ class Result implements OuterIterator, Countable
 	public function getCriteria(): Criteria
 	{
 		return $this->criteria;
+	}
+
+	/**
+	 * @return null|mixed
+	 */
+	public function getAggregation(string $name)
+	{
+		return $this->aggregations[$name] ?? null;
+	}
+
+	/**
+	 * @return array<string, mixed>
+	 */
+	public function getAggregations(): array
+	{
+		return $this->aggregations;
 	}
 
 	/**
