@@ -15,13 +15,13 @@ final class CriteriaTest extends TestCase
 	public function testFields(): void
 	{
 		$criteria = $this->createCriteria();
-		$criteria = $criteria->withField('id', 'name');
+		$criteria = $criteria->withFields(['id', 'name']);
 
-		$this->assertSame(['id', 'name'], $criteria->getFields());
+		$this->assertSame(['id' => true, 'name' => true], $criteria->getFields());
 
-		$criteria = $criteria->withField('age');
+		$criteria = $criteria->withFields(['age' => false]);
 
-		$this->assertSame(['id', 'name', 'age'], $criteria->getFields());
+		$this->assertSame(['id' => true, 'name' => true, 'age' => false], $criteria->getFields());
 	}
 
 	public function testOffset(): void

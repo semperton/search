@@ -24,7 +24,7 @@ final class Criteria
 	/** @var int[] */
 	protected $ids = [];
 
-	/** @var string[] */
+	/** @var array<string, bool> */
 	protected $fields = [];
 
 	/** @var array<string, Criteria> */
@@ -87,13 +87,23 @@ final class Criteria
 	 */
 	public function getIds(): array
 	{
-		return array_unique($this->ids);
+		return $this->ids;
 	}
 
-	public function withField(string ...$fields): Criteria
+	/**
+	 * @param array<array-key, string|bool> $fields
+	 */
+	public function withFields(array $fields): Criteria
 	{
 		$new = clone $this;
-		$new->fields = array_merge($this->fields, $fields);
+
+		foreach ($fields as $field => $value) {
+			if (is_bool($value)) {
+				$new->fields[(string)$field] = $value;
+			} else {
+				$new->fields[$value] = true;
+			}
+		}
 
 		return $new;
 	}
@@ -107,11 +117,11 @@ final class Criteria
 	}
 
 	/**
-	 * @return string[]
+	 * @return array<string, bool>
 	 */
 	public function getFields(): array
 	{
-		return array_unique($this->fields);
+		return $this->fields;
 	}
 
 	public function hasAssociation(string $field): bool
