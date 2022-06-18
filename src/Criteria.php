@@ -158,42 +158,10 @@ final class Criteria
 		return $this->associations;
 	}
 
-	public function withAvgAggregation(string $name, string $field): Criteria
+	public function withAggregation(string $name, Aggregation $aggregation): Criteria
 	{
 		$new = clone $this;
-		$new->aggregations[$name] = new Aggregation($field, Aggregation::AVG);
-
-		return $new;
-	}
-
-	public function withSumAggregation(string $name, string $field): Criteria
-	{
-		$new = clone $this;
-		$new->aggregations[$name] = new Aggregation($field, Aggregation::SUM);
-
-		return $new;
-	}
-
-	public function withMinAggregation(string $name, string $field): Criteria
-	{
-		$new = clone $this;
-		$new->aggregations[$name] = new Aggregation($field, Aggregation::MIN);
-
-		return $new;
-	}
-
-	public function withMaxAggregation(string $name, string $field): Criteria
-	{
-		$new = clone $this;
-		$new->aggregations[$name] = new Aggregation($field, Aggregation::MAX);
-
-		return $new;
-	}
-
-	public function withCountAggregation(string $name, string $field): Criteria
-	{
-		$new = clone $this;
-		$new->aggregations[$name] = new Aggregation($field, Aggregation::COUNT);
+		$new->aggregations[$name] = $aggregation;
 
 		return $new;
 	}

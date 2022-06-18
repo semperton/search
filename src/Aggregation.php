@@ -13,24 +13,24 @@ final class Aggregation
 	const COUNT = 'count';
 
 	/** @var string */
-	protected $field;
-
-	/** @var string */
 	protected $type;
 
-	public function __construct(string $field, string $type)
-	{
-		$this->field = $field;
-		$this->type = $type;
-	}
+	/** @var string */
+	protected $field;
 
-	public function getField(): string
+	public function __construct(string $type, string $field)
 	{
-		return $this->field;
+		$this->type = $type;
+		$this->field = $field;
 	}
 
 	public function getType(): string
 	{
 		return $this->type;
+	}
+
+	public function getField(): string
+	{
+		return $this->field;
 	}
 }
